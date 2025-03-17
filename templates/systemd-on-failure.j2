@@ -1,0 +1,10 @@
+[Unit]
+Description={{ monscript.name }} failure handler
+After={{ systemd_prefix }}.{{ monscript.name }}.service
+
+[Service]
+ExecStart=echo "custom_metrics_script_status{name=\"{{ systemd_prefix }}.{{ monscript.name }}\"}   1" > {{ textfile_metrics_location }}/{{ systemd_prefix }}.{{ monscript.name }}.prom
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

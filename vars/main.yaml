@@ -1,0 +1,18 @@
+---
+textfile_metrics_location: "/usr/local/custom-metrics"
+
+systemd_prefix: "custom-metrics"
+systemd_services_location: "/usr/local/custom-metrics/service"
+systemd_timers_location: "/etc/systemd/system"
+
+monscripts_location: "/usr/local/monscripts"
+
+monitoring_scripts:
+  - description: "checks docker containers status-code"
+    path: "{{ monscripts_location }}/docker-status-code.sh"
+    name: "docker-status-code"
+    time:
+      unit_active: 2
+      onboot: 1
+      timeout: 3
+      frequency: 3

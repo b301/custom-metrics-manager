@@ -1,0 +1,7 @@
+---
+spec:
+  global_scripts: []
+
+  groups:
+    - name: "prometheus"
+      filter: ".*-prom.*"

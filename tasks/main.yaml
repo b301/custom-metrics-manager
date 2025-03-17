@@ -1,0 +1,36 @@
+---
+# example for a list
+# - description: "checks docker containers status-code"
+#   path: /usr/local/monscripts/docker-status-code.sh
+#   name: docker-status-code
+#
+- name: "create destination directories"
+  file:
+    path: "{{ fpath }}"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0500"
+  
+  loop:
+    - "{{ textfile_metrics_location }}"
+    - "{{ monscripts_location }}"
+    - "{{ systemd_services_location }}"
+    - "{{ systemd_timers_location }}"
+
+  loop_control:
+    loop_var: "fpath"
+
+- name: "copy monitoring scripts to remote"
+  copy:
+    src: "docker-status-code.sh"
+    dest: "{{ monscripts_location }}"
+    owner: "root"
+    group: "root"
+    mode: "0500"
+
+- name: "utilize systemd"
+  include_tasks: "systemd.yaml"
+  loop: "{{ monitoring_scripts }}"
+  loop_control:
+    loop_var: "monscript"

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Check MTU Script Every 5 Seconds
+
+[Timer]
+OnBootSec=5s
+OnUnitActiveSec=5s
+Unit=custom_metrics-check_mtu.service
+
+[Install]
+WantedBy=timers.target

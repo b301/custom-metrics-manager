@@ -1,0 +1,11 @@
+[Unit]
+Description={{ monscript.description }}
+
+[Timer]
+OnBootSec={{ monscript.time.onboot | default(60) }}s
+OnUnitActiveSec={{ monscript.time.unit_active | default(60) }}s
+Unit={{ systemd_prefix }}.{{ monscript.name }}.service
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
