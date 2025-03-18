@@ -1,23 +1,7 @@
-# TODO
-- make on-failure work
-- impl get_hosts [?]
-- impl distribute
+# README
+This is an Ansible for management of scheduled monitoring scripts across nodes.
 
-# -------
-
-# Synopsis
-this role is suppsoed to be run with the [prometheus node exporter](https://github.com/prometheus/node_exporter), reliant on the textfile collector.
-
-this is to be designed in a self-service manner.
-
-# Docs
-### Spec
-```yaml
----
-spec:
-
-```
-
-
-### Vars
----
+# Usage
+- Write a script and place it under `files/scripts`
+- Update vars/main.yaml with configuration for the script (so it can make a systemd-service & timer)
+- Add the script name to the loop in systemd.yaml

@@ -13,6 +13,8 @@
     mode: "0500"
   
   loop:
+    - "{{ custom_metrics_root }}"
+    - "{{ custom_metrics_root }}/status"
     - "{{ textfile_metrics_location }}"
     - "{{ monscripts_location }}"
     - "{{ systemd_services_location }}"
@@ -22,12 +24,18 @@
     loop_var: "fpath"
 
 - name: "copy monitoring scripts to remote"
-  copy:
-    src: "docker-status-code.sh"
+  template:
+    src: "files/scripts/{{ monscript }}"
     dest: "{{ monscripts_location }}"
     owner: "root"
     group: "root"
     mode: "0500"
+  
+  loop:
+    - "check-fstab.sh"
+  
+  loop_control:
+    loop_var: "monscript"
 
 - name: "utilize systemd"
   include_tasks: "systemd.yaml"

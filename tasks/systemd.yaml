@@ -6,7 +6,7 @@
 - name: "create a systemd-service for the monitoring script"
   ansible.builtin.template:
     src: "systemd-service.j2"
-    dest: "{{ systemd_timers_location }}/{{ systemd_prefix }}.{{ monscript.name }}.service"
+    dest: "{{ systemd_services_location }}/{{ systemd_prefix }}.{{ monscript.name }}.service"
     owner: "root"
     group: "root"
     mode: "0400"
@@ -15,14 +15,6 @@
   ansible.builtin.template:
     src: "systemd-timer.j2"
     dest: "{{ systemd_timers_location }}/{{ systemd_prefix }}.{{ monscript.name }}.timer"
-    owner: "root"
-    group: "root"
-    mode: "0400"
-
-- name: "create the systemd-service on-failure handler"
-  ansible.builtin.template:
-    src: "systemd-on-failure.j2"
-    dest: "{{ systemd_timers_location }}/{{ systemd_prefix }}.{{ monscript.name }}.failure.service"
     owner: "root"
     group: "root"
     mode: "0400"

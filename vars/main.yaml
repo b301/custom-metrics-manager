@@ -1,18 +1,19 @@
 ---
-textfile_metrics_location: "/usr/local/custom-metrics"
+custom_metrics_root: "/usr/local/custom-metrics"
+textfile_metrics_location: "{{ custom_metrics_root }}/metrics"
 
 systemd_prefix: "custom-metrics"
-systemd_services_location: "/usr/local/custom-metrics/service"
+systemd_services_location: "/etc/systemd/system"
 systemd_timers_location: "/etc/systemd/system"
 
-monscripts_location: "/usr/local/monscripts"
+monscripts_location: "{{ custom_metrics_root }}/scripts"
 
 monitoring_scripts:
-  - description: "checks docker containers status-code"
-    path: "{{ monscripts_location }}/docker-status-code.sh"
-    name: "docker-status-code"
+  - description: "checks fstab entries"
+    path: "{{ monscripts_location }}/check-fstab.sh"
+    name: "fstab-entries"
     time:
       unit_active: 2
-      onboot: 1
-      timeout: 3
-      frequency: 3
+      onboot: 30
+      timeout: 2
+      frequency: 5

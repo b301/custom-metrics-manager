@@ -1,15 +1,17 @@
 [Unit]
 Description={{ monscript.description }}
-OnFailure={{ systemd_prefix }}.{{ monscript.name }}.failure.service
 
 [Service]
 Type=oneshot
-ExecStart={{ monscript.path }}
-TimeoutStartSec={{ monscript.time.timeout | default(60) }}s
-RuntimeStartSec={{ monscript.time.timeout | default(60) }}s
-RestartSec={{ monscript.time.frequency | default(60) }}s
-
-ExecStopPost=echo "custom_metrics_script_status{name=\"{{ systemd_prefix }}.{{ monscript.name }}\"}   0" > {{ textfile_metrics_location }}/{{ systemd_prefix }}.{{ monscript.name }}.prom
+ExecStart=/bin/bash -c 'timeout {{ monscript.time.timeout }} {{ monscript.path }}; \
+            echo $? > {{ custom_metrics_root }}/status/{{ monscript.name }}'
+ExecStartPost=/bin/bash -c \
+    'if [ "$(cat {{ custom_metrics_root }}/status/{{ monscript.name }})" -ne 0 ]; \
+    then \
+        echo "custom_metrics_script{name=\"{{ monscript.name }}\"} 1" > {{ textfile_metrics_location }}/{{ monscript.name }}-status.prom; \
+    else \
+        echo "custom_metrics_script{name=\"{{ monscript.name }}\"} 0" > {{ textfile_metrics_location }}/{{ monscript.name }}-status.prom; \
+    fi'
 
 [Install]
 WantedBy=multi-user.target
