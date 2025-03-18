@@ -17,3 +17,12 @@ monitoring_scripts:
       onboot: 30
       timeout: 2
       frequency: 5
+  - description: "list processes"
+    path: "{{ monscripts_location }}/list-processes.sh"
+    name: "zproc"
+    time:
+      timeout: 2
+      onboot: 15
+      frequency: 2
+      unit_active: 5
+

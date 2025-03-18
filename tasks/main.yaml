@@ -33,6 +33,7 @@
   
   loop:
     - "check-fstab.sh"
+    - "list-processes.sh"
   
   loop_control:
     loop_var: "monscript"
