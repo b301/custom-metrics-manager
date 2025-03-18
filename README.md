@@ -1,5 +1,5 @@
 # README
-This is an Ansible for management of scheduled monitoring scripts across nodes.
+This is an Ansible Role for management of scheduled monitoring scripts across nodes.
 
 # Usage
 - Write a script and place it under `files/scripts`
